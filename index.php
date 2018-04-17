@@ -6,62 +6,54 @@
 	<title>backbone</title>
 </head>
 <body>
-	<div class="container text-center">
-	<ul class="innerView" >
-		<h1>Наша таблица где-то тут </h1>
-		<br>
-		<span id="innerView"></span>
-	</ul>
-	</div>
+<table class="inn">
 
-	<script type="text/template"  class="viewNewTr" >
-		<table  class="table">
-			<thead >
-				<tr>
-					<th class="text-center">Имя</th>
-					<th class="text-center">Возраст</th>
-					<th class="text-center">Изменить</th>
-				</tr>
-			</thead>
-			<tbody>
-					
-				<?php $v=1; for ($t=0; $t <= 10; $t++) :?>
-					<tr>
-						<?php for ($i=0; $i <= 2 ; $i++) {?>
-							<td class="col-md-2"><?= $v++ ?></td>			
-						<?php }?>
-					</tr>
-				<?php endfor?>
-			</tbody>
-		</table>		
-	</script>
+</table>
+     <div class="container">
+     <h2 class="text-center">Таблица exel</h2>
+         <table  class="table">
+             <thead >
+             <tr>
+                 <th class="text-center">Имя</th>
+                 <th class="text-center">Возраст</th>
+                 <th class="text-center">Изменить</th>
+             </tr>
+             </thead>
+             <tbody class="innerTable">
+             <div id="innerTable" >
+                 <?php $v=1; for ($t=0; $t <= 3; $t++) :?>
+                     <tr>
+                         <?php for ($i=0; $i <= 2 ; $i++) {?>
+                             <td class="col-md-2 colectionTr"><?= $v++ ?></td>
+                         <?php }?>
+                     </tr>
+                 <?php endfor?>
+             </div>
+             </tbody>
+         </table>
+        <span>сумма: </span>
+        <div class="btn-primary btn allSum">0</div>
+    </div>
+<!-- <script type="text/template"  class="viewExelTabel">
 
-	<script type="text/template" class="viewTable">
-		<button class="btn-success btn" id="addNewTr">Добавить новый элемент</button>	
-		<div class="innderContainer"></div>
-		<span>сумма: </span>
-		<div class="btn-primary btn allSum">0</div>	
-	</script>
+         <% _.each(artists, function(artist, index, artists) { %>
+            <li><%= artist.value%></li>
+            <h>3</h>
+         <% }); %>
+         <tr><td><h1>in!!!</h1></td></tr>
 
-	<script src="js/jquery.2.2.4.min.js"></script>
-	<script src="js/underscore.js"></script>
-	<script src="js/backbone.js"></script>
-<script src="model/modeTable.js"></script>
-<script src="view/viewTabel.js"></script>
-<script src="view/viewTabels.js"></script> 
-
-	<script>	
-
-		$(function()
-		{
-		var modelT = new modelTable({
-			name : "sanin"
-		});
-		var viewT = new viewTabels({
-			model: modelT,
-			el: '#innerView'
-		});
-		});
-	</script>
+ </script>
+-->
+<script type="x-tmpl" id="list_tmpl">
+<div class='container'>
+<tr>
+<% for(var i = 0; i < mods.length; i++){ %>
+    <% var mod = mods[i]; %>
+    <td><%= mod.value%></td>
+<% }; %>
+</tr>
+</div>
+</script>
+	<script src="assets/js/main.js"></script>
 </body>
 </html>
