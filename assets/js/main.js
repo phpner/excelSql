@@ -11818,7 +11818,7 @@ return jQuery;
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__model_collectionModels__ = __webpack_require__(3);
+/* WEBPACK VAR INJECTION */(function($, Backbone) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__model_collectionModels__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__model_mainModel__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__view_viewMain__ = __webpack_require__(7);
 
@@ -11826,7 +11826,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 $(function () {
-    var modelT = new __WEBPACK_IMPORTED_MODULE_1__model_mainModel__["a" /* mainModel */]();
+    Backbone.Collection.prototype.save = function (options) {
+        Backbone.sync("create", this, options);
+    };
+    Backbone.emulateHTTP = true;
+    Backbone.emulateJSON = true;
+
+    var modelT = new __WEBPACK_IMPORTED_MODULE_1__model_mainModel__["a" /* mainModel */]({ url: "../../class/excel_phpner.php" });
     var collection = new __WEBPACK_IMPORTED_MODULE_0__model_collectionModels__["a" /* collectionModels */]();
     var viewT = new __WEBPACK_IMPORTED_MODULE_2__view_viewMain__["a" /* viewMain */]({
         model: modelT,
@@ -11834,7 +11840,7 @@ $(function () {
         collection: collection
     });
 });
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0), __webpack_require__(1)))
 
 /***/ }),
 /* 3 */
@@ -11843,6 +11849,7 @@ $(function () {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(Backbone) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return collectionModels; });
 var collectionModels = Backbone.Collection.extend({
+    url: '/lib/ajax_function.php',
     comparator: function (chapter) {
         return chapter.get("_id");
     }
@@ -13462,18 +13469,31 @@ var viewMain = Backbone.View.extend({
         this.render();
     },
     render: function () {
-        this.$el.html(this.template);
         this.addToCollection();
         this.addEventsToTr();
         this.addEventsToClickOk();
+        this.addEventsToCancel();
     },
     addEventsToClickOk: function () {
         var self = this;
-        $(document).on('click', ".click-ok", function () {
+        $(document).on('click', ".click-ok", function (event) {
             var val = $(event.target).parent().siblings('input').val();
             var id = $(event.target).parent().siblings('input').attr('id');
             var model = self.collection.get(id);
             model.set({ value: val });
+            self.collection.save({ name: 'tr' });
+            console.log(model.save());
+            /* model.save();*/
+        });
+    },
+    addEventsToCancel: function () {
+        var self = this;
+        $(document).on('click', ".click-cancel", function (event) {
+            var id = $(event.target).parent().siblings('input').attr('id');
+            var mod = self.collection.get(id);
+            var td = $(event.target).parent().parent().parent('td').append(mod.toJSON().value);
+            var div = $(event.target).parent().parent('div').remove();
+            console.log(mod.toJSON().value);
         });
     },
     addToCollection: function () {
@@ -13488,7 +13508,7 @@ var viewMain = Backbone.View.extend({
             $(ck).on('click', function () {
                 let _this = $(this);
                 if (!_this.has("input").length) {
-                    _this.html("<div class='input-group'><input class='form-control col-md-2' type='text' id='" + i + "' value='" + _this.text() + "'></input><span class='input-group-btn'><button class='btn btn-success click-ok'>Ok</button><button class='btn btn-danger'>Отмена</button></span></div>");
+                    _this.html("<div class='input-group'><input class='form-control col-md-2' type='text' id='" + i + "' value='" + _this.text() + "'></input><span class='input-group-btn'><button class='btn btn-success click-ok'>Ok</button><button class='btn btn-danger click-cancel'>X</button></span></div>");
                 }
             });
         }
@@ -13532,7 +13552,6 @@ var ViewTr = Backbone.View.extend({
             }
         }
         this.viewM.addEventsToTr();
-        console.log(this.collection);
     }
 });
 

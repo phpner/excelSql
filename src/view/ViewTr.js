@@ -26,7 +26,6 @@ var ViewTr = Backbone.View.extend({
 
             }
             this.viewM.addEventsToTr();
-            console.log(this.collection);
     }
 });
 export {ViewTr};

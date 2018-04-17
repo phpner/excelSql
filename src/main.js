@@ -4,7 +4,13 @@ import {viewMain} from './view/viewMain';
 
 $(function()
 {
-    var modelT = new mainModel();
+    Backbone.Collection.prototype.save = function (options) {
+        Backbone.sync("create", this, options);
+    };
+    Backbone.emulateHTTP = true;
+    Backbone.emulateJSON = true;
+
+    var modelT = new mainModel({url: "../../class/excel_phpner.php"});
     var collection  = new collectionModels();
     var viewT = new viewMain({
         model: modelT,

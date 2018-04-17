@@ -1,3 +1,18 @@
+<?php
+require_once 'vendor/autoload.php';
+require_once 'lib/excel_phpner.php';
+// Создаем объект класса PHPExcel
+$obj =  excelPhpner::getInstance();
+$xls = $obj::$excelphp;
+// Устанавливаем индекс активного листа
+$xls->setActiveSheetIndex(0);
+// Получаем активный лист
+$sheet = $xls->getActiveSheet();
+// Подписываем лист
+$sheet->setTitle('Таблица умножения');
+
+// Выводим содержимое файла
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,10 +36,17 @@
              </thead>
              <tbody class="innerTable">
              <div id="innerTable" >
-                 <?php $v=1; for ($t=0; $t <= 3; $t++) :?>
+                 <?php
+                    $v=1;
+                    for ($t=0; $t <= 5; $t++) :
+                 ?>
                      <tr>
-                         <?php for ($i=0; $i <= 2 ; $i++) {?>
-                             <td class="col-md-2 colectionTr"><?= $v++ ?></td>
+                         <?php for ($i=0; $i <= 4 ; $i++) {?>
+                             <td class="col-md-2 colectionTr"><?= $v?></td>
+                             <?php $sheet->setCellValueByColumnAndRow($i, $t  +1 ,$v);
+                            $sheet->getStyleByColumnAndRow($i,$t +1)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                            $v++;
+                            ?>
                          <?php }?>
                      </tr>
                  <?php endfor?>
@@ -34,16 +56,10 @@
         <span>сумма: </span>
         <div class="btn-primary btn allSum">0</div>
     </div>
-<!-- <script type="text/template"  class="viewExelTabel">
-
-         <% _.each(artists, function(artist, index, artists) { %>
-            <li><%= artist.value%></li>
-            <h>3</h>
-         <% }); %>
-         <tr><td><h1>in!!!</h1></td></tr>
-
- </script>
--->
+<?php
+$objWriter = PHPExcel_IOFactory::createWriter($xls, 'Excel2007');
+$objWriter->save('name.xlsx');
+?>
 <script type="x-tmpl" id="list_tmpl">
 <div class='container'>
 <tr>

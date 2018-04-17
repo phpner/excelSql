@@ -1,4 +1,4 @@
 var mainModel =  Backbone.Model.extend({
-    idAttribute: "id"
+    idAttribute: "id",
 });
 export  {mainModel};

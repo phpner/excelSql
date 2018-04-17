@@ -1,0 +1,15 @@
+{
+    "name": "phpner/excelSql",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "phpner",
+            "email": "phpner@gmil.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "phpoffice/phpexcel": "1.8.x-dev",
+        "phpoffice/phpspreadsheet": "dev-master"
+    }
+}
