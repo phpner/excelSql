@@ -1,17 +1,9 @@
 <?php
 require_once 'vendor/autoload.php';
-require_once 'lib/excel_phpner.php';
 // Создаем объект класса PHPExcel
-$obj =  excelPhpner::getInstance();
-$xls = $obj::$excelphp;
-// Устанавливаем индекс активного листа
-$xls->setActiveSheetIndex(0);
-// Получаем активный лист
-$sheet = $xls->getActiveSheet();
-// Подписываем лист
-$sheet->setTitle('Таблица умножения');
+$phpner = new \lib\ExcelPhpner();
+$sheet = $phpner->getSheet();
 
-// Выводим содержимое файла
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +14,6 @@ $sheet->setTitle('Таблица умножения');
 </head>
 <body>
 <table class="inn">
-
 </table>
      <div class="container">
      <h2 class="text-center">Таблица exel</h2>
@@ -36,30 +27,13 @@ $sheet->setTitle('Таблица умножения');
              </thead>
              <tbody class="innerTable">
              <div id="innerTable" >
-                 <?php
-                    $v=1;
-                    for ($t=0; $t <= 5; $t++) :
-                 ?>
-                     <tr>
-                         <?php for ($i=0; $i <= 4 ; $i++) {?>
-                             <td class="col-md-2 colectionTr"><?= $v?></td>
-                             <?php $sheet->setCellValueByColumnAndRow($i, $t  +1 ,$v);
-                            $sheet->getStyleByColumnAndRow($i,$t +1)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                            $v++;
-                            ?>
-                         <?php }?>
-                     </tr>
-                 <?php endfor?>
+                <?php $phpner->loop(); ?>
              </div>
              </tbody>
          </table>
         <span>сумма: </span>
         <div class="btn-primary btn allSum">0</div>
     </div>
-<?php
-$objWriter = PHPExcel_IOFactory::createWriter($xls, 'Excel2007');
-$objWriter->save('name.xlsx');
-?>
 <script type="x-tmpl" id="list_tmpl">
 <div class='container'>
 <tr>

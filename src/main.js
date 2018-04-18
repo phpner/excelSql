@@ -10,7 +10,7 @@ $(function()
     Backbone.emulateHTTP = true;
     Backbone.emulateJSON = true;
 
-    var modelT = new mainModel({url: "../../class/excel_phpner.php"});
+    var modelT = new mainModel({url: "../../class/ExcelPhpner.php"});
     var collection  = new collectionModels();
     var viewT = new viewMain({
         model: modelT,

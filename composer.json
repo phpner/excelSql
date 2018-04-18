@@ -10,6 +10,13 @@
     "minimum-stability": "dev",
     "require": {
         "phpoffice/phpexcel": "1.8.x-dev",
-        "phpoffice/phpspreadsheet": "dev-master"
+        "phpoffice/phpspreadsheet": "dev-master",
+        "illuminate/container": "^5.7@dev"
+    },
+    "autoload": {
+    "psr-4": {
+      "lib\\": "lib/"
     }
+  }
+ 
 }
