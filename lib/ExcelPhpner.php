@@ -18,7 +18,7 @@ class ExcelPhpner{
      * @throws \PHPExcel_Exception
      */
 
-    public function getSheet($set = 2, $get = 0)
+    public function getSheet($set = , $get = 0)
     {
         $this->xls->createSheet($set);
         $this->sheet = $this->xls->getActiveSheet($get);
